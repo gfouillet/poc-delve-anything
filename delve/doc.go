@@ -1,9 +1,9 @@
 // Package delve allows to run any binaries with latest version of delve.
 //
 // To make it works:
-// 1. compile your code with
+//  1. compile your code with
 //     -gcflags "all=-N -l"
-// 2. Use [Delve] function to encapsulate your main function.
+//  2. Use [Delve] function to encapsulate your main function.
 //
 // # Tips
 //
@@ -11,7 +11,8 @@
 //
 // Add next to your main.go a init_debug.go file which will be compiled only if the tags debug is
 // passed to the compiler:
-//    go build -gcflags "all=-N -l" -tags debug path/to/my/package
+//
+//	go build -gcflags "all=-N -l" -tags debug path/to/my/package
 //
 // This file will contains an init function which will do encapsulate the main function into Delve,
 // only if the tags is setted. This way, delve dependencies won't be shipped in production.
@@ -20,31 +21,30 @@
 //
 // debug_init.go
 //
-//     //go:build debug
-//     // +build debug
+//	//go:build debug
+//	// +build debug
 //
-//     package main
+//	package main
 //
-//     import "github.com/gfouillet/poc-delve-anything/delve"
+//	import "github.com/gfouillet/poc-delve-anything/delve"
 //
-//     func init() {
-//        runMain = delve.Delve(runMain)
-//     }
+//	func init() {
+//	   runMain = delve.Delve(/*options*/)(runMain)
+//	}
 //
 // main.go
 //
-//     package main
+//	package main
 //
-//     import (
-//        "os"
-//     )
+//	import (
+//	   "os"
+//	)
 //
-//     var runMain = mainArgs
+//	var runMain = mainArgs
 //
-//     func main() {
-//        os.Exit(runMain(os.Args))
-//     }
+//	func main() {
+//	   os.Exit(runMain(os.Args))
+//	}
 //
-//     func mainArgs(args []string) int { /* ... */ }
-//
+//	func mainArgs(args []string) int { /* ... */ }
 package delve
